@@ -1,13 +1,17 @@
-import socket
+from functions import send_text, get_text
 
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect(("192.168.0.15", 6666))
-print("Connected")
+def clientSocket(mySocket):
+    serverIp = input("Welcome to socket client\nType a server ip: ")
+    mySocket.connect((serverIp, 6666))
+    print("Connected")
 
-data = client_socket.recv(1024)
-print(data.decode())
+    #data = mySocket.recv(1024)
+    #print(data.decode())
+    arrivalMessage = next(get_text(mySocket))
+    print(arrivalMessage)
 
-message = "CLIENT say: Hello Server"
-client_socket.send(message.encode())
+    sendMessage = "CLIENT say: Hello Server"
+    #mySocket.send(sendMessage.encode())
+    send_text(mySocket, sendMessage)
 
-client_socket.close()
+    mySocket.close()
